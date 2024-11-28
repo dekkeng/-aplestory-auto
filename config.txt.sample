@@ -1,9 +1,9 @@
 WALK_MAX_DURATION               = 0
 MIN_POTION_INTERVAL             = 30
 MAX_POTION_INTERVAL             = 50
-SKILL_KEY_1                     = a
-SKILL_KEY_2                     = s
-SKILL_KEY_3                     = d
-SKILL_KEY_4                     = f
-POTION_KEY_1                    = q
-POTION_KEY_2                    = w
+SKILL_KEY_1_X                   = 2110
+SKILL_KEY_1_Y                   = 1357
+SKILL_KEY_2_X                   = 2158
+SKILL_KEY_2_Y                   = 1357
+POTION_KEY_1_X                  = 2081
+POTION_KEY_1_Y                  = 1357
