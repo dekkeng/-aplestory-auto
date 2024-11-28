@@ -19,7 +19,6 @@ UP = 0xC8
 DOWN = 0xD0
 LEFT = 0xCB
 RIGHT = 0xCD
-ENTER = 0x1C 
 
 PUL = ctypes.POINTER(ctypes.c_ulong)
 
@@ -60,6 +59,7 @@ class Player:
     def __init__(self):       
         #subprocess.Popen("osk", stdout= subprocess.PIPE, shell=True) 
         self.WALK_MAX_DURATION = float(os.getenv('WALK_MAX_DURATION', 2))
+        self.ATTACK_PER_TIME = int(os.getenv('ATTACK_PER_TIME', 5))
         self.MIN_POTION_INTERVAL = int(os.getenv('MIN_POTION_INTERVAL', 30))
         self.MAX_POTION_INTERVAL = int(os.getenv('MAX_POTION_INTERVAL', 50))
    
@@ -70,7 +70,8 @@ class Player:
             #count = count+1
             self.walk()
             self.wait(random.uniform(0,1))
-            self.atk()
+            for i in range(self.ATTACK_PER_TIME):
+                self.atk()
             #if count > amount:
                 #self.potion()
                 #count = 1
@@ -89,20 +90,25 @@ class Player:
         
     def key(self, key):        
         self.pressKey(key)
-        self.wait(random.uniform(0,self.WALK_MAX_DURATION))
+        self.wait(random.uniform(0,1))
         self.releaseKey(key)
         #pyautogui.keyDown(key)
         #self.wait(random.uniform(0,self.WALK_MAX_DURATION))
         #pyautogui.keyUp(key)
         
+    def key2(self, key):
+        pyautogui.keyDown(key)
+        self.wait(random.uniform(0,self.WALK_MAX_DURATION))
+        pyautogui.keyUp(key)
+
     def walk(self):
         if self.WALK_MAX_DURATION > 0:
             self.log('walk')
-            key = random.choice([LEFT, RIGHT])
-            self.key(key)
+            key = random.choice(['left', 'right'])
+            self.key2(key)
     def atk(self):        
         self.log('Attack')
-        key = random.choice([A])
+        key = random.choice([A, S])
         self.key(key)
     def potion(self):
         self.click(self.POTION_KEY_1)

@@ -1,3 +1,4 @@
-WALK_MAX_DURATION               = 0
+WALK_MAX_DURATION               = 3
+ATTACK_PER_TIME                 = 5
 MIN_POTION_INTERVAL             = 30
 MAX_POTION_INTERVAL             = 50
