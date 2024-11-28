@@ -97,10 +97,12 @@ class Player:
         
     def walk(self):
         if self.WALK_MAX_DURATION > 0:
+            self.log('walk')
             key = random.choice([LEFT, RIGHT])
             self.key(key)
     def atk(self):        
-        key = random.choice([A, S])
+        self.log('Attack')
+        key = random.choice([A])
         self.key(key)
     def potion(self):
         self.click(self.POTION_KEY_1)
