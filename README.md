@@ -17,9 +17,18 @@ pip install -r requirements.txt
 cp config.txt.sample config.txt
 ```
 
+วิธีคือ ให้ไปหา python.exe ที่ลงไว้ครับ แล้วสร้าง shortcut มา
+คลิกขวา properties shortcut นั้น แล้วเพิ่ม path ของ script bot ต่อท้ายไป ประมาณนี้
+
+`D:\Python\Python310\python.exe D:\Develop\maplestory-auto\start.py`
+
+แล้วมาติ๊ก run this program as admin
+
 # Configuration
 There are default configurations that suit my screen, but you can adjust to suit your screen.
 Adjust values inside config.txt file to suit your screen and run bot smoothly.
+
+# Config is in development, right now you have to modify the player.py code to match your need
 
 | Name | Description | Type | Default |
 | --- | --- | --- | --- |

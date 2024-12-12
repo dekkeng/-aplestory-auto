@@ -2,6 +2,7 @@ import os, pyautogui
 from time import sleep
 from datetime import datetime
 from dotenv import load_dotenv
+import keyboard
 import random
 import subprocess 
 import ctypes
@@ -15,6 +16,7 @@ E = 0x12
 S = 0x1F
 D = 0x20
 Z = 0x2C
+R = 0x13
 UP = 0xC8
 DOWN = 0xD0
 LEFT = 0xCB
@@ -56,10 +58,12 @@ class Input(ctypes.Structure):
                 ("ii", Input_I)]
 
 class Player:
-    def __init__(self):       
+    def __init__(self):        
+        self.ISLEFT = True
         #subprocess.Popen("osk", stdout= subprocess.PIPE, shell=True) 
         self.WALK_MAX_DURATION = float(os.getenv('WALK_MAX_DURATION', 2))
-        self.ATTACK_PER_TIME = int(os.getenv('ATTACK_PER_TIME', 5))
+        self.ATTACK_LOOP_TIME = int(os.getenv('ATTACK_LOOP_TIME', 1000))
+        self.ATTACK_PER_TIME = int(os.getenv('ATTACK_PER_TIME', 90))
         self.MIN_POTION_INTERVAL = int(os.getenv('MIN_POTION_INTERVAL', 30))
         self.MAX_POTION_INTERVAL = int(os.getenv('MAX_POTION_INTERVAL', 50))
    
@@ -68,10 +72,11 @@ class Player:
         #amount = random.uniform(self.MIN_POTION_INTERVAL,self.MAX_POTION_INTERVAL)
         while(True):
             #count = count+1
-            self.walk()
+            #self.walk()
             self.wait(random.uniform(0,1))
-            for i in range(self.ATTACK_PER_TIME):
-                self.atk()
+            self.atk2()
+            #for i in range(self.ATTACK_PER_TIME):
+            #    self.atk()
             #if count > amount:
                 #self.potion()
                 #count = 1
@@ -104,15 +109,30 @@ class Player:
     def walk(self):
         if self.WALK_MAX_DURATION > 0:
             self.log('walk')
-            key = random.choice(['left', 'right'])
+            if self.ISLEFT:
+                key = 'left'
+                self.ISLEFT = False
+            else:
+                key = 'right'
+                self.ISLEFT = True
+                self.key(R)
+                self.wait(random.uniform(1,2))
+            #key = random.choice(['left', 'right'])
             self.key2(key)
     def atk(self):        
         self.log('Attack')
-        key = random.choice([A, S])
+        key = random.choice([A,A,A,A,S])
         self.key(key)
-    def potion(self):
-        self.click(self.POTION_KEY_1)
 
+    def atk2(self):        
+        self.log('Attack')
+        for i in range(random.randint(self.ATTACK_PER_TIME, self.ATTACK_PER_TIME+10)):
+            self.key(A)
+            self.wait(random.uniform(0, 0.2))
+        self.wait(random.uniform(1,2))
+        self.key(S)
+        self.wait(random.uniform(1,2))
+        self.walk()
 
     def drag(self, pos1, pos2):
         pyautogui.mouseDown(pos1, duration=0.01)
